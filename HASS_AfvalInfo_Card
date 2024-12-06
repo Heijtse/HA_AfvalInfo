@@ -1,0 +1,20 @@
+type: custom:mushroom-template-card
+primary: "{{ state_attr(config.entity, 'friendly_name') }}"
+secondary: |-
+  {% set days = state_attr(config.entity, 'days_until_collection_date') %}
+  {% if is_number(days) and days == 0 %}
+    vandaag
+  {% else %}       
+    {% if is_number(days) and days == 1 %}
+      morgen
+    {% else %}
+      {{ days }} dagen
+    {% endif %}
+  {% endif %}
+layout: vertical
+picture: "{{ state_attr(config.entity, 'entity_picture') }}"
+card_mod:
+  style: |
+    ha-card {
+      --icon-size: 70px;
+    }
