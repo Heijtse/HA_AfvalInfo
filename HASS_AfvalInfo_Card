@@ -12,7 +12,45 @@ secondary: |-
     {% endif %}
   {% endif %}
 layout: vertical
-picture: "{{ state_attr(config.entity, 'entity_picture') }}"
+picture: "{{ state_attr(config.entity, 'entity_picture') }}"type: custom:auto-entities
+card:
+  type: horizontal-stack
+card_param: cards
+filter:
+  exclude:
+    - state: unknown
+    - entity_id: sensor.afvalinfo_*_trash_type_today
+    - entity_id: sensor.afvalinfo_*_trash_type_tomorrow
+  include:
+    - entity_id: sensor.afvalinfo_*
+      options:
+        type: custom:mushroom-template-card
+        primary: "{{ state_attr(config.entity, 'friendly_name') }}"
+        secondary: >-
+          {% set days = state_attr(config.entity, 'days_until_collection_date')
+          %}
+
+          {% if is_number(days) and days == 0 %}
+            vandaag
+          {% else %}       
+            {% if is_number(days) and days == 1 %}
+              morgen
+            {% else %}
+              {{ days }} dagen
+            {% endif %}
+          {% endif %}
+        layout: vertical
+        picture: "{{ state_attr(config.entity, 'entity_picture') }}"
+        card_mod:
+          style: |
+            ha-card {
+              --icon-size: 70px;
+            }
+sort:
+  method: attribute
+  attribute: days_until_collection_date
+  numeric: true
+
 card_mod:
   style: |
     ha-card {
