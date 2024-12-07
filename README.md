@@ -1,8 +1,10 @@
 This card was built inspired by [HA-afvalinfo-card](https://github.com/bafplus/HA-afvalinfo-card).
 
 HACS Prerequisites:
+ - afvalInfo
  - auto-entities
  - Mushroom
+ - card-mod
 
 Screenshot:
 
